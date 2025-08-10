@@ -6,13 +6,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 import com.amazonaws.services.polly.model.OutputFormat;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
@@ -23,6 +28,7 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.regions.Region;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class PollyDemoController {
 	
 	@Autowired
@@ -87,6 +93,18 @@ public class PollyDemoController {
 
 		        return new ResponseEntity<>(audioBytes, headers, HttpStatus.OK);
 		
+	}
+	
+	
+	@Configuration
+	public class WebConfig implements WebMvcConfigurer {
+	    @Override
+	    public void addCorsMappings(CorsRegistry registry) {
+	        registry.addMapping("/**")
+	                .allowedOrigins("http://localhost:3000")
+	                .allowedMethods("GET", "POST", "PUT", "DELETE")
+	                .allowedHeaders("*");
+	    }
 	}
 
 }
