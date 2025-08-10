@@ -37,7 +37,7 @@ public class PollyDemo {
 			    .withRegion("us-east-1")
 			    .build();
 		// Create describe voices request.
-		DescribeVoicesRequest describeVoicesRequest = new DescribeVoicesRequest();
+		DescribeVoicesRequest describeVoicesRequest = new DescribeVoicesRequest().withLanguageCode("en-IN");
 
 		// Synchronously ask Amazon Polly to describe available TTS voices.
 		DescribeVoicesResult describeVoicesResult = polly.describeVoices(describeVoicesRequest);
@@ -46,8 +46,8 @@ public class PollyDemo {
 
 	public InputStream synthesize(String text, OutputFormat format) throws IOException {
 		SynthesizeSpeechRequest synthReq = 
-		new SynthesizeSpeechRequest().withText(text).withVoiceId(voice.getId())
-				.withOutputFormat(format).withEngine("neural");
+		new SynthesizeSpeechRequest().withText(text).withVoiceId("Aditi")
+				.withOutputFormat(format);
 		SynthesizeSpeechResult synthRes = polly.synthesizeSpeech(synthReq);
 
 		return synthRes.getAudioStream();

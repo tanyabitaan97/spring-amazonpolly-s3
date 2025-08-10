@@ -204,5 +204,10 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-1.2-api</artifactId>
         </dependency>
+        <dependency>
+  <groupId>com.amazonaws</groupId>
+  <artifactId>aws-java-sdk-s3</artifactId>
+  <version>1.12.787</version> <!-- or latest stable version -->
+</dependency>
     </dependencies>
 </project>
